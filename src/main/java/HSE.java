@@ -8,7 +8,7 @@ public class HSE {
                 + "|  _  | ___) | |___ \n"
                 + "|_| |_||____/|_____|\n";
 
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskCount = 0;
 
         System.out.println(banner);
@@ -22,11 +22,32 @@ public class HSE {
                 if (command.equals("bye")) {
                     break;
                 } else if (command.equals("list")) {
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + ". " + tasks[i]);
+                   for (int i = 0; i < taskCount; i++) {
+                        System.out.println((i + 1) + ".[" 
+                                + tasks[i].getStatusIcon() + "] "
+                                + tasks[i].getDescription());
                     }
-                } else {
-                    tasks[taskCount] = command;
+                } else if (command.startsWith("mark ")) {
+                    String[] parts = command.split(" ");
+                    int index = Integer.parseInt(parts[1]) - 1;
+
+                    tasks[index].markAsDone();
+
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("[" + tasks[index].getStatusIcon() + "] "
+                            + tasks[index].getDescription());
+
+                } else if (command.startsWith("unmark ")) {
+                    String[] parts = command.split(" ");
+                    int index = Integer.parseInt(parts[1]) - 1;
+
+                    tasks[index].markAsNotDone();
+
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println("[" + tasks[index].getStatusIcon() + "] "
+                            + tasks[index].getDescription());
+                 } else {
+                    tasks[taskCount] = new Task(command);
                     taskCount++;
                     System.out.println("added: " + command);
                 }
