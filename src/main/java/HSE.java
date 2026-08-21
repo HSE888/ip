@@ -23,9 +23,8 @@ public class HSE {
                     break;
                 } else if (command.equals("list")) {
                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + ".[" 
-                                + tasks[i].getStatusIcon() + "] "
-                                + tasks[i].getDescription());
+                        System.out.println((i + 1) + "."
+                                + tasks[i].toString());
                     }
                 } else if (command.startsWith("mark ")) {
                     String[] parts = command.split(" ");
@@ -34,8 +33,7 @@ public class HSE {
                     tasks[index].markAsDone();
 
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("[" + tasks[index].getStatusIcon() + "] "
-                            + tasks[index].getDescription());
+                    System.out.println(tasks[index].toString());
 
                 } else if (command.startsWith("unmark ")) {
                     String[] parts = command.split(" ");
@@ -44,12 +42,39 @@ public class HSE {
                     tasks[index].markAsNotDone();
 
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("[" + tasks[index].getStatusIcon() + "] "
-                            + tasks[index].getDescription());
+                    System.out.println(tasks[index].toString());
                  } else {
-                    tasks[taskCount] = new Task(command);
+                    if (command.startsWith("todo ")) {
+                        tasks[taskCount] = new ToDos(command);
+                    }
+                    if (command.startsWith("deadline ")){
+                        String input = command.substring(9);
+                        String[] parts = input.split(" /by ", 2);
+
+                        String description = parts[0];
+                        String deadline = parts[1];
+                        tasks[taskCount] = new Deadline(description, deadline);
+
+                    }
+                    if (command.startsWith("event ")){
+                        String input = command.substring(6);
+
+                        String[] fromParts = input.split(" /from ", 2);
+                        String description = fromParts[0];
+
+                        String[] toParts = fromParts[1].split(" /to ", 2);
+                        String from = toParts[0];
+                        String to = toParts[1];
+
+                        tasks[taskCount] = new Event(description, from, to);
+
+                    }
                     taskCount++;
-                    System.out.println("added: " + command);
+
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + tasks[taskCount - 1]);
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+
                 }
             }
         }
