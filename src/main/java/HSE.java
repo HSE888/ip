@@ -22,7 +22,7 @@ public class HSE {
                 if (command.equals("bye")) {
                     break;
                 } else if (command.equals("list")) {
-                   for (int i = 0; i < taskCount; i++) {
+                    for (int i = 0; i < taskCount; i++) {
                         System.out.println((i + 1) + "."
                                 + tasks[i].toString());
                     }
@@ -43,11 +43,28 @@ public class HSE {
 
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(tasks[index].toString());
-                 } else {
+
+                } else if (command.equals("todo")) {
+                    try {
+                        throw new IllegalArgumentException(
+                                "OOPS!!! Please give the description of a todo.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (command.equals("blah")) {
+                    try {
+                        throw new IllegalArgumentException(
+                                "OOPS!!! Please input a task.");
+                    }
+                        catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                else {
                     if (command.startsWith("todo ")) {
                         tasks[taskCount] = new ToDos(command);
                     }
-                    if (command.startsWith("deadline ")){
+                    if (command.startsWith("deadline ")) {
                         String input = command.substring(9);
                         String[] parts = input.split(" /by ", 2);
 
@@ -56,7 +73,7 @@ public class HSE {
                         tasks[taskCount] = new Deadline(description, deadline);
 
                     }
-                    if (command.startsWith("event ")){
+                    if (command.startsWith("event ")) {
                         String input = command.substring(6);
 
                         String[] fromParts = input.split(" /from ", 2);
@@ -69,16 +86,18 @@ public class HSE {
                         tasks[taskCount] = new Event(description, from, to);
 
                     }
-                    taskCount++;
 
+                    taskCount++;
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + tasks[taskCount - 1]);
                     System.out.println("Now you have " + taskCount + " tasks in the list.");
 
                 }
-            }
-        }
 
-        System.out.println("Bye. Hope to see you again soon!");
+            }
+
+
+            System.out.println("Bye. Hope to see you again soon!");
+        }
     }
 }
