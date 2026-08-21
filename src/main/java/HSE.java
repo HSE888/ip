@@ -59,8 +59,22 @@ public class HSE {
                         catch (IllegalArgumentException e) {
                             System.out.println(e.getMessage());
                         }
+                    } else if (command.startsWith("delete ")) {
+                    String[] parts = command.split(" ");
+                    int index = Integer.parseInt(parts[1]) - 1;
+
+                    Task deletedTask = tasks[index];
+
+                    for (int i = index; i < taskCount - 1; i++) {
+                        tasks[i] = tasks[i + 1];
                     }
-                else {
+
+                    taskCount--;
+
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + deletedTask);
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                }else {
                     if (command.startsWith("todo ")) {
                         tasks[taskCount] = new ToDos(command);
                     }
