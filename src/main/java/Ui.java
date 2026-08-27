@@ -4,6 +4,14 @@ import java.util.Scanner;
 
 /** Handles all console interaction with the user. */
 public class Ui {
+    private static final String DIVIDER = "____________________________________________________________";
+    private final Scanner scanner;
+
+    /** Creates a user interface that reads from the standard input stream. */
+    public Ui() {
+        scanner = new Scanner(System.in);
+    }
+
     /** Prints the greeting displayed when the application starts. */
     public void showWelcome() {
         System.out.println(" _   _  ____  _____ \n"
@@ -15,9 +23,19 @@ public class Ui {
         System.out.println("What can I do for you?");
     }
 
+    /** Returns whether another command is available from the console. */
+    public boolean hasNextCommand() {
+        return scanner.hasNextLine();
+    }
+
     /** Reads and trims one command from the console. */
-    public String readCommand(Scanner scanner) {
+    public String readCommand() {
         return scanner.nextLine().trim();
+    }
+
+    /** Prints the divider used to separate command interactions. */
+    public void showLine() {
+        System.out.println(DIVIDER);
     }
 
     /** Prints the saved tasks with one-based task numbers. */

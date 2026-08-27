@@ -29,6 +29,32 @@ public class Parser {
         return CommandType.INVALID;
     }
 
+    /** Converts a full user command into the object that performs its behavior. */
+    public static Command parse(String command) {
+        switch (parseCommandType(command)) {
+        case BYE:
+            return new ByeCommand();
+        case LIST:
+            return new ListCommand();
+        case FIND:
+            return new FindCommand(command.substring(5));
+        case MARK:
+            return new MarkCommand(command);
+        case UNMARK:
+            return new UnmarkCommand(command);
+        case DELETE:
+            return new DeleteCommand(command);
+        case TODO:
+            return new TodoCommand(command.length() > 4 ? command.substring(5).trim() : "");
+        case DEADLINE:
+            return new DeadlineCommand(command.substring(9));
+        case EVENT:
+            return new EventCommand(command.substring(6));
+        default:
+            return new InvalidCommand();
+        }
+    }
+
     /** Converts the task number in a command into a validated zero-based index. */
     public static int getIndex(String command, int taskCount) {
         String[] parts = command.split(" ");
