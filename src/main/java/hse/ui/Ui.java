@@ -1,6 +1,11 @@
+package hse.ui;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+
+import hse.task.Task;
+import hse.task.TaskList;
 
 /** Handles all console interaction with the user. */
 public class Ui {

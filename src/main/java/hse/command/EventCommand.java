@@ -1,4 +1,13 @@
+package hse.command;
+
 import java.io.IOException;
+
+import hse.parser.Parser;
+import hse.storage.Storage;
+import hse.task.Event;
+import hse.task.Task;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Adds an event task described by the user. */
 public class EventCommand extends Command {

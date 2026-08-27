@@ -1,4 +1,10 @@
+package hse.command;
+
 import java.io.IOException;
+
+import hse.storage.Storage;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Represents one parsed instruction that can be performed by the application. */
 public abstract class Command {

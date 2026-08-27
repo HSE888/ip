@@ -1,4 +1,13 @@
+package hse.command;
+
 import java.io.IOException;
+
+import hse.parser.Parser;
+import hse.storage.Storage;
+import hse.task.Deadline;
+import hse.task.Task;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Adds a deadline task described by the user. */
 public class DeadlineCommand extends Command {
