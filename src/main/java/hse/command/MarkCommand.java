@@ -1,4 +1,12 @@
+package hse.command;
+
 import java.io.IOException;
+
+import hse.parser.Parser;
+import hse.storage.Storage;
+import hse.task.Task;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Marks one task as complete and saves the updated list. */
 public class MarkCommand extends Command {

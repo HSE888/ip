@@ -1,5 +1,13 @@
+package hse;
+
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
+
+import hse.command.Command;
+import hse.parser.Parser;
+import hse.storage.Storage;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Coordinates the application's user interface, command parsing, tasks, and storage. */
 public class HSE {

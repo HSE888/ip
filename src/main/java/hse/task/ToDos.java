@@ -1,3 +1,5 @@
+package hse.task;
+
 public class ToDos extends Task{
     public ToDos(String description) {
         super(description);
@@ -7,4 +9,3 @@ public class ToDos extends Task{
         return "[T]" + super.toString();
     }
 }
-

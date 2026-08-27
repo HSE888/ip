@@ -1,4 +1,10 @@
+package hse.command;
+
 import java.io.IOException;
+
+import hse.storage.Storage;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Reports an input that does not match any supported command. */
 public class InvalidCommand extends Command {

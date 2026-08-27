@@ -1,4 +1,12 @@
+package hse.command;
+
 import java.io.IOException;
+
+import hse.storage.Storage;
+import hse.task.Task;
+import hse.task.TaskList;
+import hse.task.ToDos;
+import hse.ui.Ui;
 
 /** Adds a todo task described by the user. */
 public class TodoCommand extends Command {

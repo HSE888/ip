@@ -1,3 +1,5 @@
+package hse.storage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,6 +11,12 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import hse.task.Deadline;
+import hse.task.Event;
+import hse.task.Task;
+import hse.task.TaskList;
+import hse.task.ToDos;
 
 /** Loads tasks from, and saves tasks to, the application's data file. */
 public class Storage {

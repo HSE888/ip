@@ -1,5 +1,12 @@
+package hse.command;
+
 import java.io.IOException;
 import java.time.LocalDate;
+
+import hse.parser.Parser;
+import hse.storage.Storage;
+import hse.task.TaskList;
+import hse.ui.Ui;
 
 /** Displays deadlines and events that occur on the requested date. */
 public class FindCommand extends Command {
