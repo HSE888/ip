@@ -2,11 +2,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class HSE {
     public static Task[] tasks = new Task[100];
     public static int taskCount = 0;
+    public static final DateTimeFormatter ISO_DATE_FORMAT = DateTimeFormatter.ofPattern("uuuu-M-d");
+    public static final DateTimeFormatter SLASH_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/uuuu");
+    public static final DateTimeFormatter DASH_DATE_FORMAT = DateTimeFormatter.ofPattern("d-M-uuuu");
+    public static final DateTimeFormatter ISO_DATE_TIME_FORMAT =
+            DateTimeFormatter.ofPattern("uuuu-M-d HHmm");
+    public static final DateTimeFormatter SLASH_DATE_TIME_FORMAT =
+            DateTimeFormatter.ofPattern("d/M/uuuu HHmm");
+    public static final DateTimeFormatter DASH_DATE_TIME_FORMAT =
+            DateTimeFormatter.ofPattern("d-M-uuuu HHmm");
 
     public static void main(String[] args) {
         String banner = " _   _  ____  _____ \n"
@@ -36,7 +49,7 @@ public class HSE {
         }
 
         while (scanner.hasNextLine()) {
-            String command = scanner.nextLine();
+            String command = scanner.nextLine().trim();
 
             if (command.equals("bye")) {
                 break;
@@ -47,6 +60,9 @@ public class HSE {
                     for (int i = 0; i < taskCount; i++) {
                         System.out.println((i + 1) + "." + tasks[i]);
                     }
+
+                } else if (command.startsWith("find ")) {
+                    printTasksOn(parseDate(command.substring(5)));
 
                 } else if (command.startsWith("mark ")) {
                     int index = getIndex(command);
@@ -100,7 +116,7 @@ public class HSE {
                         throw new IllegalArgumentException(
                                 "Please use: deadline DESCRIPTION /by DATE.");
                     }
-                    tasks[taskCount] = new Deadline(parts[0], parts[1]);
+                    tasks[taskCount] = new Deadline(parts[0], parseDateTime(parts[1]));
                     taskCount++;
                     writeToFile(tasks[taskCount - 1] + System.lineSeparator(), true);
                     printAddedTask();
@@ -117,7 +133,8 @@ public class HSE {
                         throw new IllegalArgumentException(
                                 "Please use: event DESCRIPTION /from START /to END.");
                     }
-                    tasks[taskCount] = new Event(fromParts[0], toParts[0], toParts[1]);
+                    tasks[taskCount] = new Event(fromParts[0], parseDateTime(toParts[0]),
+                            parseDateTime(toParts[1]));
                     taskCount++;
                     writeToFile(tasks[taskCount - 1] + System.lineSeparator(), true);
                     printAddedTask();
@@ -129,6 +146,8 @@ public class HSE {
                 System.out.println("OOPS!!! Please enter a valid task number.");
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("OOPS!!! That task number does not exist.");
+            } catch (DateTimeParseException e) {
+                System.out.println("OOPS!!! Please use yyyy-MM-dd or d/M/yyyy, with optional HHmm time.");
             } catch (IllegalArgumentException e) {
                 System.out.println("OOPS!!! " + e.getMessage());
             } catch (IOException e) {
@@ -147,6 +166,53 @@ public class HSE {
             throw new ArrayIndexOutOfBoundsException();
         }
         return index;
+    }
+
+    // Accepts dates such as 2019-12-02, 2019-12-2, or 2/12/2019.
+    public static LocalDate parseDate(String date) {
+        try {
+            return LocalDate.parse(date, ISO_DATE_FORMAT);
+        } catch (DateTimeParseException e) {
+            try {
+                return LocalDate.parse(date, SLASH_DATE_FORMAT);
+            } catch (DateTimeParseException e2) {
+                return LocalDate.parse(date, DASH_DATE_FORMAT);
+            }
+        }
+    }
+
+    // Accepts a date with an optional 24-hour time, e.g. 2/12/2019 1800.
+    public static LocalDateTime parseDateTime(String dateTime) {
+        try {
+            return LocalDateTime.parse(dateTime, ISO_DATE_TIME_FORMAT);
+        } catch (DateTimeParseException e) {
+            try {
+                return LocalDateTime.parse(dateTime, SLASH_DATE_TIME_FORMAT);
+            } catch (DateTimeParseException e2) {
+                try {
+                    return LocalDateTime.parse(dateTime, DASH_DATE_TIME_FORMAT);
+                } catch (DateTimeParseException e3) {
+                    return parseDate(dateTime).atStartOfDay();
+                }
+            }
+        }
+    }
+
+    // Stretch goal: list deadlines and events that occur on a specified date.
+    public static void printTasksOn(LocalDate date) {
+        boolean hasMatch = false;
+        for (int i = 0; i < taskCount; i++) {
+            if (tasks[i] instanceof Deadline && ((Deadline) tasks[i]).isOn(date)) {
+                System.out.println((i + 1) + "." + tasks[i]);
+                hasMatch = true;
+            } else if (tasks[i] instanceof Event && ((Event) tasks[i]).occursOn(date)) {
+                System.out.println((i + 1) + "." + tasks[i]);
+                hasMatch = true;
+            }
+        }
+        if (!hasMatch) {
+            System.out.println("No deadlines or events occur on that date.");
+        }
     }
 
     public static void printAddedTask() {
@@ -181,6 +247,7 @@ public class HSE {
         while (fileScanner.hasNextLine() && taskCount < tasks.length) {
             String line = fileScanner.nextLine();
 
+            try {
             if (line.startsWith("[T][X] ")) {
                 tasks[taskCount] = new ToDos(line.substring(7));
                 tasks[taskCount].markAsDone();
@@ -192,7 +259,10 @@ public class HSE {
                 if (parts.length != 2 || !parts[1].endsWith(")")) {
                     continue;
                 }
-                tasks[taskCount] = new Deadline(parts[0], parts[1].substring(0, parts[1].length() - 1));
+                LocalDateTime date = parseSavedDateTime(
+                        parts[1].substring(0, parts[1].length() - 1), Deadline.DATE_TIME_FORMAT,
+                        Deadline.DATE_FORMAT);
+                tasks[taskCount] = new Deadline(parts[0], date);
                 if (line.startsWith("[D][X] ")) {
                     tasks[taskCount].markAsDone();
                 }
@@ -206,7 +276,11 @@ public class HSE {
                 if (times.length != 2) {
                     continue;
                 }
-                tasks[taskCount] = new Event(parts[0], times[0], times[1]);
+                LocalDateTime from = parseSavedDateTime(times[0], Event.DATE_TIME_FORMAT,
+                        Event.DATE_FORMAT);
+                LocalDateTime to = parseSavedDateTime(times[1], Event.DATE_TIME_FORMAT,
+                        Event.DATE_FORMAT);
+                tasks[taskCount] = new Event(parts[0], from, to);
                 if (line.startsWith("[E][X] ")) {
                     tasks[taskCount].markAsDone();
                 }
@@ -214,8 +288,21 @@ public class HSE {
                 continue; // Ignore a corrupted line in the file.
             }
             taskCount++;
+            } catch (DateTimeParseException e) {
+                continue; // Ignore a saved task that does not contain valid dates.
+            }
         }
 
         fileScanner.close();
+    }
+
+    // Also accepts old Level-8 saved dates that did not include a time.
+    public static LocalDateTime parseSavedDateTime(String dateTime, DateTimeFormatter dateTimeFormat,
+                                                    DateTimeFormatter dateFormat) {
+        try {
+            return LocalDateTime.parse(dateTime, dateTimeFormat);
+        } catch (DateTimeParseException e) {
+            return LocalDate.parse(dateTime, dateFormat).atStartOfDay();
+        }
     }
 }
