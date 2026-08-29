@@ -57,6 +57,17 @@ public class TaskList {
         return new ArrayList<>(tasks);
     }
 
+    /** Returns tasks whose descriptions contain the supplied keyword. */
+    public List<Task> find(String keyword) {
+        List<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
     /** Returns tasks that are deadlines or events occurring on a supplied date. */
     public List<Task> getTasksOn(LocalDate date) {
         List<Task> matchingTasks = new ArrayList<>();

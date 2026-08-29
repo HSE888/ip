@@ -39,7 +39,7 @@ public class Parser {
         if (command.equals("list")) {
             return CommandType.LIST;
         }
-        if (command.startsWith("find ")) {
+        if (command.equals("find") || command.startsWith("find ")) {
             return CommandType.FIND;
         }
         if (command.startsWith("mark ")) {
@@ -71,7 +71,7 @@ public class Parser {
         case LIST:
             return new ListCommand();
         case FIND:
-            return new FindCommand(command.substring(5));
+            return new FindCommand(command.length() > 4 ? command.substring(5).trim() : "");
         case MARK:
             return new MarkCommand(command);
         case UNMARK:
