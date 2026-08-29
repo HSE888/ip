@@ -103,6 +103,8 @@ public class Ui {
 
     /** Prints a list of tasks with one-based numbering. */
     private void showNumberedTasks(List<Task> tasks) {
-        for (int i = 0; i < tasks.size(); i++) System.out.println((i + 1) + "." + tasks.get(i));
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + "." + tasks.get(i));
+        }
     }
 }

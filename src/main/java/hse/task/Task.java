@@ -29,6 +29,6 @@ public class Task {
     /** Returns this task in the standard completion-status display format. */
     @Override
     public String toString() {
-        return  "[" + (isDone ? "X" : " " )+ "] " + description;
+        return "[" + (isDone ? "X" : " ") + "] " + description;
     }
 }
