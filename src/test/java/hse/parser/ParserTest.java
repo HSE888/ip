@@ -1,11 +1,19 @@
 package hse.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import hse.command.FindDateCommand;
 
 import org.junit.jupiter.api.Test;
 
 class ParserTest {
+    @Test
+    void parse_findDateCommand_createsFindDateCommand() {
+        assertInstanceOf(FindDateCommand.class, Parser.parse("finddate 3/9/2026"));
+    }
+
     @Test
     void getIndex_firstAndLastTask_returnsZeroBasedIndexes() {
         assertEquals(0, Parser.getIndex("mark 1", 3));
