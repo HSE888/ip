@@ -10,6 +10,23 @@ import org.junit.jupiter.api.Test;
 
 class TaskListTest {
     @Test
+    void find_matchingKeyword_returnsTasksInOriginalOrder() {
+        Task firstMatch = new ToDos("read book");
+        Task nonMatch = new ToDos("write notes");
+        Task secondMatch = new Deadline("return book", LocalDate.of(2026, 9, 3).atStartOfDay());
+        TaskList tasks = new TaskList(List.of(firstMatch, nonMatch, secondMatch));
+
+        assertEquals(List.of(firstMatch, secondMatch), tasks.find("book"));
+    }
+
+    @Test
+    void find_noMatchingKeyword_returnsEmptyList() {
+        TaskList tasks = new TaskList(List.of(new ToDos("read notes")));
+
+        assertTrue(tasks.find("book").isEmpty());
+    }
+
+    @Test
     void getTasksOn_matchingDate_returnsDeadlinesAndEventsButNotTodos() {
         LocalDate targetDate = LocalDate.of(2026, 9, 3);
         Task deadline = new Deadline("submit assignment", targetDate.atStartOfDay());

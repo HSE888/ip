@@ -48,6 +48,12 @@ public class Ui {
         showNumberedTasks(tasks.getTasks());
     }
 
+    /** Prints tasks whose descriptions match a requested keyword. */
+    public void showMatchingTasks(List<Task> matchingTasks) {
+        System.out.println("Here are the matching tasks in your list:");
+        showNumberedTasks(matchingTasks);
+    }
+
     /** Prints tasks that occur on a date, or a message when there are no matches. */
     public void showTasksOnDate(TaskList tasks, LocalDate date) {
         List<Integer> positions = tasks.getTaskPositionsOn(date);

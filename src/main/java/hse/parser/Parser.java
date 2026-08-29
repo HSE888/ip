@@ -33,7 +33,7 @@ public class Parser {
     public static CommandType parseCommandType(String command) {
         if (command.equals("bye")) return CommandType.BYE;
         if (command.equals("list")) return CommandType.LIST;
-        if (command.startsWith("find ")) return CommandType.FIND;
+        if (command.equals("find") || command.startsWith("find ")) return CommandType.FIND;
         if (command.startsWith("mark ")) return CommandType.MARK;
         if (command.startsWith("unmark ")) return CommandType.UNMARK;
         if (command.startsWith("delete ")) return CommandType.DELETE;
@@ -51,7 +51,7 @@ public class Parser {
         case LIST:
             return new ListCommand();
         case FIND:
-            return new FindCommand(command.substring(5));
+            return new FindCommand(command.length() > 4 ? command.substring(5).trim() : "");
         case MARK:
             return new MarkCommand(command);
         case UNMARK:
