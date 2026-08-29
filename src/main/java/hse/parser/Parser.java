@@ -20,7 +20,9 @@ import hse.command.UnmarkCommand;
 /** Interprets user commands, task numbers, and dates. */
 public class Parser {
     /** Supported command categories. */
-    public enum CommandType { BYE, LIST, FIND, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, INVALID }
+    public enum CommandType {
+        BYE, LIST, FIND, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, INVALID
+    }
 
     private static final DateTimeFormatter ISO_DATE_FORMAT = DateTimeFormatter.ofPattern("uuuu-M-d");
     private static final DateTimeFormatter SLASH_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/uuuu");
@@ -31,15 +33,33 @@ public class Parser {
 
     /** Returns the category of a command without executing it. */
     public static CommandType parseCommandType(String command) {
-        if (command.equals("bye")) return CommandType.BYE;
-        if (command.equals("list")) return CommandType.LIST;
-        if (command.startsWith("find ")) return CommandType.FIND;
-        if (command.startsWith("mark ")) return CommandType.MARK;
-        if (command.startsWith("unmark ")) return CommandType.UNMARK;
-        if (command.startsWith("delete ")) return CommandType.DELETE;
-        if (command.equals("todo") || command.startsWith("todo ")) return CommandType.TODO;
-        if (command.startsWith("deadline ")) return CommandType.DEADLINE;
-        if (command.startsWith("event ")) return CommandType.EVENT;
+        if (command.equals("bye")) {
+            return CommandType.BYE;
+        }
+        if (command.equals("list")) {
+            return CommandType.LIST;
+        }
+        if (command.startsWith("find ")) {
+            return CommandType.FIND;
+        }
+        if (command.startsWith("mark ")) {
+            return CommandType.MARK;
+        }
+        if (command.startsWith("unmark ")) {
+            return CommandType.UNMARK;
+        }
+        if (command.startsWith("delete ")) {
+            return CommandType.DELETE;
+        }
+        if (command.equals("todo") || command.startsWith("todo ")) {
+            return CommandType.TODO;
+        }
+        if (command.startsWith("deadline ")) {
+            return CommandType.DEADLINE;
+        }
+        if (command.startsWith("event ")) {
+            return CommandType.EVENT;
+        }
         return CommandType.INVALID;
     }
 
@@ -73,7 +93,9 @@ public class Parser {
     public static int getIndex(String command, int taskCount) {
         String[] parts = command.split(" ");
         int index = Integer.parseInt(parts[1]) - 1;
-        if (index < 0 || index >= taskCount) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
         return index;
     }
 

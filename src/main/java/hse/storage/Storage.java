@@ -29,12 +29,16 @@ public class Storage {
 
     /** Loads saved tasks, returning an empty list if the data file does not yet exist. */
     public TaskList load() throws FileNotFoundException {
-        if (!file.exists()) return new TaskList();
+        if (!file.exists()) {
+            return new TaskList();
+        }
         List<Task> loadedTasks = new ArrayList<>();
         try (Scanner fileScanner = new Scanner(file)) {
             while (fileScanner.hasNextLine()) {
                 Task task = parseSavedTask(fileScanner.nextLine());
-                if (task != null) loadedTasks.add(task);
+                if (task != null) {
+                    loadedTasks.add(task);
+                }
             }
         }
         return new TaskList(loadedTasks);
@@ -47,18 +51,26 @@ public class Storage {
             throw new IOException("Could not create data directory.");
         }
         try (FileWriter writer = new FileWriter(file, false)) {
-            for (Task task : tasks.getTasks()) writer.write(task + System.lineSeparator());
+            for (Task task : tasks.getTasks()) {
+                writer.write(task + System.lineSeparator());
+            }
         }
     }
 
     /** Recreates one task from its saved display format, or returns {@code null} for corrupt data. */
     private Task parseSavedTask(String line) {
         try {
-            if (line.startsWith("[T][X] ")) return completedTask(new ToDos(line.substring(7)));
-            if (line.startsWith("[T][ ] ")) return new ToDos(line.substring(7));
+            if (line.startsWith("[T][X] ")) {
+                return completedTask(new ToDos(line.substring(7)));
+            }
+            if (line.startsWith("[T][ ] ")) {
+                return new ToDos(line.substring(7));
+            }
             if (line.startsWith("[D][X] ") || line.startsWith("[D][ ] ")) {
                 String[] parts = line.substring(7).split(" \\(by: ", 2);
-                if (parts.length != 2 || !parts[1].endsWith(")")) return null;
+                if (parts.length != 2 || !parts[1].endsWith(")")) {
+                    return null;
+                }
                 Task task = new Deadline(parts[0], parseSavedDateTime(
                         parts[1].substring(0, parts[1].length() - 1), Deadline.DATE_TIME_FORMAT,
                         Deadline.DATE_FORMAT));
@@ -66,9 +78,13 @@ public class Storage {
             }
             if (line.startsWith("[E][X] ") || line.startsWith("[E][ ] ")) {
                 String[] parts = line.substring(7).split(" \\(from: ", 2);
-                if (parts.length != 2 || !parts[1].endsWith(")")) return null;
+                if (parts.length != 2 || !parts[1].endsWith(")")) {
+                    return null;
+                }
                 String[] times = parts[1].substring(0, parts[1].length() - 1).split(" to: ", 2);
-                if (times.length != 2) return null;
+                if (times.length != 2) {
+                    return null;
+                }
                 Task task = new Event(parts[0], parseSavedDateTime(times[0], Event.DATE_TIME_FORMAT,
                         Event.DATE_FORMAT), parseSavedDateTime(times[1], Event.DATE_TIME_FORMAT,
                         Event.DATE_FORMAT));
