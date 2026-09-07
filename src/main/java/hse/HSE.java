@@ -9,6 +9,7 @@ import hse.storage.Storage;
 import hse.task.TaskList;
 import hse.ui.Ui;
 
+//CHECKSTYLE.OFF: AbbreviationAsWordInName
 /** Coordinates the application's user interface, command parsing, tasks, and storage. */
 public class HSE {
     private final Ui ui;
@@ -59,3 +60,4 @@ public class HSE {
         new HSE("data/duke.txt").run();
     }
 }
+//CHECKSTYLE.ON: AbbreviationAsWordInName
