@@ -24,8 +24,7 @@ public class Ui {
                 + "| |_| |\\___ \\|  _|  \n"
                 + "|  _  | ___) | |___ \n"
                 + "|_| |_| |____/|_____|\n");
-        System.out.println("Hello! I'm HSE.");
-        System.out.println("What can I do for you?");
+        showMessages("Hello! I'm HSE.", "What can I do for you?");
     }
 
     /** Returns whether another command is available from the console. */
@@ -50,7 +49,7 @@ public class Ui {
 
     /** Prints tasks whose descriptions match a requested keyword. */
     public void showMatchingTasks(List<Task> matchingTasks) {
-        System.out.println("Here are the matching tasks in your list:");
+        showMessages("Here are the matching tasks in your list:");
         showNumberedTasks(matchingTasks);
     }
 
@@ -58,7 +57,7 @@ public class Ui {
     public void showTasksOnDate(TaskList tasks, LocalDate date) {
         List<Integer> positions = tasks.getTaskPositionsOn(date);
         if (positions.isEmpty()) {
-            System.out.println("No deadlines or events occur on that date.");
+            showMessages("No deadlines or events occur on that date.");
             return;
         }
         for (int position : positions) {
@@ -68,33 +67,29 @@ public class Ui {
 
     /** Prints confirmation for an added task. */
     public void showAddedTask(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        showMessages("Got it. I've added this task:", "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /** Prints confirmation for a marked task. */
     public void showMarkedTask(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task);
+        showMessages("Nice! I've marked this task as done:", task.toString());
     }
 
     /** Prints confirmation for an unmarked task. */
     public void showUnmarkedTask(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(task);
+        showMessages("OK, I've marked this task as not done yet:", task.toString());
     }
 
     /** Prints confirmation for a deleted task. */
     public void showDeletedTask(Task task, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        showMessages("Noted. I've removed this task:", "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /** Prints an application error in the established error format. */
     public void showError(String message) {
-        System.out.println("OOPS!!! " + message);
+        showMessages("OOPS!!! " + message);
     }
 
     /** Prints the error shown when saved tasks cannot be loaded. */
@@ -104,7 +99,14 @@ public class Ui {
 
     /** Prints the farewell displayed when the application exits. */
     public void showGoodbye() {
-        System.out.println("Bye. Hope to see you again soon!");
+        showMessages("Bye. Hope to see you again soon!");
+    }
+
+    /** Prints the supplied messages, one per line, in the given order. */
+    private void showMessages(String... messages) {
+        for (String message : messages) {
+            System.out.println(message);
+        }
     }
 
     /** Prints a list of tasks with one-based numbering. */
