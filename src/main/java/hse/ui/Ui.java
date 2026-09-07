@@ -46,8 +46,7 @@ public class Ui {
                 + "| |_| |\\___ \\|  _|  \n"
                 + "|  _  | ___) | |___ \n"
                 + "|_| |_| |____/|_____|\n");
-        System.out.println("Hello! I'm HSE.");
-        System.out.println("What can I do for you?");
+        output("Hello! I'm HSE.", "What can I do for you?");
     }
 
     /** Returns whether another command is available from the console. */
@@ -92,28 +91,24 @@ public class Ui {
 
     /** Prints confirmation for an added task. */
     public void showAddedTask(Task task, int taskCount) {
-        output("Got it. I've added this task:");
-        output("  " + task);
-        output("Now you have " + taskCount + " tasks in the list.");
+        output("Got it. I've added this task:", "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /** Prints confirmation for a marked task. */
     public void showMarkedTask(Task task) {
-        output("Nice! I've marked this task as done:");
-        output(task.toString());
+        output("Nice! I've marked this task as done:", task.toString());
     }
 
     /** Prints confirmation for an unmarked task. */
     public void showUnmarkedTask(Task task) {
-        output("OK, I've marked this task as not done yet:");
-        output(task.toString());
+        output("OK, I've marked this task as not done yet:", task.toString());
     }
 
     /** Prints confirmation for a deleted task. */
     public void showDeletedTask(Task task, int taskCount) {
-        output("Noted. I've removed this task:");
-        output("  " + task);
-        output("Now you have " + taskCount + " tasks in the list.");
+        output("Noted. I've removed this task:", "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
     }
 
     /** Prints an application error in the established error format. */
@@ -131,12 +126,14 @@ public class Ui {
         output("Bye. Hope to see you again soon!");
     }
 
-    /** Sends a message to the console or the graphical response buffer. */
-    private void output(String message) {
-        if (guiMode) {
-            responseBuffer.add(message);
-        } else {
-            System.out.println(message);
+    /** Sends the supplied messages to the console or graphical response buffer in order. */
+    private void output(String... messages) {
+        for (String message : messages) {
+            if (guiMode) {
+                responseBuffer.add(message);
+            } else {
+                System.out.println(message);
+            }
         }
     }
 
