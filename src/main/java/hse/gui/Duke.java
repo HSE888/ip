@@ -1,9 +1,8 @@
+package hse.gui;
+
 import hse.HSE;
 
-/**
- * The chat assistant exposed to the graphical interface.
- * It delegates every user message to the HSE task manager.
- */
+/** Provides the HSE task manager to the graphical interface. */
 public class Duke {
     private final HSE hse;
 

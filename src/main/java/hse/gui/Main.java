@@ -1,3 +1,5 @@
+package hse.gui;
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -6,12 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * A GUI for Duke using FXML.
- */
+/** Provides the JavaFX graphical interface for HSE. */
 public class Main extends Application {
 
-    private Duke duke = new Duke();
+    private final Duke duke = new Duke();
 
     @Override
     public void start(Stage stage) {

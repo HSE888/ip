@@ -33,9 +33,6 @@ public class HSE {
         try {
             Command command = Parser.parse(fullCommand);
             command.execute(tasks, ui, storage);
-            if (command.isExit()) {
-                ui.showGoodbye();
-            }
         } catch (NumberFormatException e) {
             ui.showError("Please enter a valid task number.");
         } catch (IndexOutOfBoundsException e) {

@@ -1,8 +1,8 @@
+package hse.gui;
+
 import javafx.application.Application;
 
-/**
- * A launcher class to work around JavaFX classpath issues.
- */
+/** Launches the JavaFX application without requiring the JavaFX runtime to load {@link Main} directly. */
 public class Launcher {
     public static void main(String[] args) {
         Application.launch(Main.class, args);

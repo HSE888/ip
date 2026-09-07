@@ -1,3 +1,5 @@
+package hse.gui;
+
 import java.io.IOException;
 import java.util.Collections;
 
@@ -37,19 +39,21 @@ public class DialogBox extends HBox {
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
-        Collections.reverse(tmp);
-        this.getChildren().setAll(tmp);
-        this.setAlignment(Pos.TOP_LEFT);
+        ObservableList<Node> dialogNodes = FXCollections.observableArrayList(getChildren());
+        Collections.reverse(dialogNodes);
+        getChildren().setAll(dialogNodes);
+        setAlignment(Pos.TOP_LEFT);
     }
 
+    /** Creates a dialog box displaying a message from the user. */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /** Creates a dialog box displaying a message from HSE. */
     public static DialogBox getDukeDialog(String text, Image img) {
-        DialogBox db = new DialogBox(text, img);
-        db.flip();
-        return db;
+        DialogBox dialogBox = new DialogBox(text, img);
+        dialogBox.flip();
+        return dialogBox;
     }
 }
