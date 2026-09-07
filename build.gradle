@@ -13,13 +13,31 @@ repositories {
     mavenCentral()
 }
 
+String osName = System.getProperty('os.name').toLowerCase()
+String architecture = System.getProperty('os.arch').toLowerCase()
+String javaFxPlatform
+
+if (osName.contains('mac')) {
+    javaFxPlatform = architecture.contains('aarch64') || architecture.contains('arm64') ? 'mac-aarch64' : 'mac'
+} else if (osName.contains('windows')) {
+    javaFxPlatform = 'win'
+} else {
+    javaFxPlatform = 'linux'
+}
+
 dependencies {
     String jUnitVersion = '5.14.4'
+    String javaFxVersion = '17.0.7'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
+
+    implementation("org.openjfx:javafx-base:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-controls:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-fxml:${javaFxVersion}:${javaFxPlatform}")
+    implementation("org.openjfx:javafx-graphics:${javaFxVersion}:${javaFxPlatform}")
 }
 
 test {
@@ -37,7 +55,7 @@ test {
 }
 
 application {
-    mainClass = 'hse.HSE'
+    mainClass = 'hse.gui.Launcher'
 }
 
 jar {

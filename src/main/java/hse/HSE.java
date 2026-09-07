@@ -27,6 +27,26 @@ public class HSE {
         }
     }
 
+    /** Processes one user command and returns the response text for graphical display. */
+    public String getResponse(String fullCommand) {
+        ui.setGuiMode();
+        try {
+            Command command = Parser.parse(fullCommand);
+            command.execute(tasks, ui, storage);
+        } catch (NumberFormatException e) {
+            ui.showError("Please enter a valid task number.");
+        } catch (IndexOutOfBoundsException e) {
+            ui.showError("That task number does not exist.");
+        } catch (DateTimeParseException e) {
+            ui.showError("Please use yyyy-MM-dd or d/M/yyyy, with optional HHmm time.");
+        } catch (IllegalArgumentException e) {
+            ui.showError(e.getMessage());
+        } catch (IOException e) {
+            ui.showError("Could not save your tasks.");
+        }
+        return ui.getResponse();
+    }
+
     /** Runs the command loop until the user enters {@code bye}. */
     public void run() {
         ui.showWelcome();
