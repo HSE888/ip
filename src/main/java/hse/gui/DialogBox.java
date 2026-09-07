@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/** Displays one chat message with its sender's image. */
 public class DialogBox extends HBox {
 
     @FXML
