@@ -1,6 +1,7 @@
 package hse.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -9,6 +10,20 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class TaskListTest {
+    @Test
+    void add_nullTask_assertionError() {
+        TaskList tasks = new TaskList();
+
+        assertThrows(AssertionError.class, () -> tasks.add(null));
+    }
+
+    @Test
+    void get_outOfRangeIndex_assertionError() {
+        TaskList tasks = new TaskList();
+
+        assertThrows(AssertionError.class, () -> tasks.get(0));
+    }
+
     @Test
     void find_matchingKeyword_returnsTasksInOriginalOrder() {
         Task firstMatch = new ToDos("read book");
