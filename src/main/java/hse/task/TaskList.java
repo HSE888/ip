@@ -75,9 +75,7 @@ public class TaskList {
     public List<Task> getTasksOn(LocalDate date) {
         List<Task> matchingTasks = new ArrayList<>();
         for (Task task : tasks) {
-            if (task instanceof Deadline && ((Deadline) task).isOn(date)) {
-                matchingTasks.add(task);
-            } else if (task instanceof Event && ((Event) task).occursOn(date)) {
+            if (occursOn(task, date)) {
                 matchingTasks.add(task);
             }
         }
@@ -89,13 +87,22 @@ public class TaskList {
         List<Integer> positions = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if (task instanceof Deadline && ((Deadline) task).isOn(date)) {
-                positions.add(i + 1);
-            } else if (task instanceof Event && ((Event) task).occursOn(date)) {
+            if (occursOn(task, date)) {
                 positions.add(i + 1);
             }
         }
         return positions;
+    }
+
+    /** Returns whether a deadline or event occurs on a supplied date. */
+    private boolean occursOn(Task task, LocalDate date) {
+        if (task instanceof Deadline) {
+            return ((Deadline) task).isOn(date);
+        }
+        if (task instanceof Event) {
+            return ((Event) task).occursOn(date);
+        }
+        return false;
     }
 
     /** Asserts that an index refers to an existing task. */
