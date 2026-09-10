@@ -3,6 +3,7 @@ package hse.task;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** Stores tasks and provides operations that change or query the task collection. */
 public class TaskList {
@@ -62,13 +63,9 @@ public class TaskList {
 
     /** Returns tasks whose descriptions contain the supplied keyword. */
     public List<Task> find(String keyword) {
-        List<Task> matchingTasks = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.getDescription().contains(keyword)) {
-                matchingTasks.add(task);
-            }
-        }
-        return matchingTasks;
+        return tasks.stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toList());
     }
 
     /** Returns tasks that are deadlines or events occurring on a supplied date. */
