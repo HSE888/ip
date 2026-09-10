@@ -21,16 +21,19 @@ public class TaskList {
 
     /** Adds a task to the end of the list. */
     public void add(Task task) {
+        assert task != null : "A task list cannot contain null tasks.";
         tasks.add(task);
     }
 
     /** Returns the task at a zero-based index. */
     public Task get(int index) {
+        assertValidIndex(index);
         return tasks.get(index);
     }
 
     /** Removes and returns the task at a zero-based index. */
     public Task delete(int index) {
+        assertValidIndex(index);
         return tasks.remove(index);
     }
 
@@ -90,5 +93,10 @@ public class TaskList {
             }
         }
         return positions;
+    }
+
+    /** Asserts that an index refers to an existing task. */
+    private void assertValidIndex(int index) {
+        assert index >= 0 && index < tasks.size() : "Task index must identify an existing task.";
     }
 }
