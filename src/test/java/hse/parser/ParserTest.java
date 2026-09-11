@@ -7,11 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import hse.command.FindDateCommand;
+import hse.command.SortCommand;
 
 class ParserTest {
     @Test
     void parse_findDateCommand_createsFindDateCommand() {
         assertInstanceOf(FindDateCommand.class, Parser.parse("finddate 3/9/2026"));
+    }
+
+    @Test
+    void parse_sort_createsSortCommand() {
+        assertInstanceOf(SortCommand.class, Parser.parse("sort"));
     }
 
     @Test

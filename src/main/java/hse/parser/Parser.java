@@ -15,6 +15,7 @@ import hse.command.FindDateCommand;
 import hse.command.InvalidCommand;
 import hse.command.ListCommand;
 import hse.command.MarkCommand;
+import hse.command.SortCommand;
 import hse.command.TodoCommand;
 import hse.command.UnmarkCommand;
 
@@ -22,7 +23,7 @@ import hse.command.UnmarkCommand;
 public class Parser {
     /** Supported command categories. */
     public enum CommandType {
-        BYE, LIST, FIND, FIND_DATE, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, INVALID
+        BYE, LIST, FIND, FIND_DATE, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, SORT, INVALID
     }
 
     private static final DateTimeFormatter ISO_DATE_FORMAT = DateTimeFormatter.ofPattern("uuuu-M-d");
@@ -39,6 +40,9 @@ public class Parser {
         }
         if (command.equals("list")) {
             return CommandType.LIST;
+        }
+        if (command.equals("sort")) {
+            return CommandType.SORT;
         }
         if (command.equals("finddate") || command.startsWith("finddate ")) {
             return CommandType.FIND_DATE;
@@ -74,6 +78,8 @@ public class Parser {
                 return new ByeCommand();
             case LIST:
                 return new ListCommand();
+            case SORT:
+                return new SortCommand();
             case FIND:
                 return new FindCommand(command.length() > 4 ? command.substring(5).trim() : "");
             case FIND_DATE:

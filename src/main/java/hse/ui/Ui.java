@@ -111,6 +111,11 @@ public class Ui {
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
+    /** Prints confirmation that tasks have been sorted chronologically. */
+    public void showTasksSorted() {
+        output("Tasks sorted by date.");
+    }
+
     /** Prints an application error in the established error format. */
     public void showError(String message) {
         output("OOPS!!! " + message);

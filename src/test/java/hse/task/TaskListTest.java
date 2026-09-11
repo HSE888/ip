@@ -42,6 +42,21 @@ class TaskListTest {
     }
 
     @Test
+    void sortByDate_datedTasksFirstAndTodosKeepTheirOrder() {
+        Task firstTodo = new ToDos("read notes");
+        Task lateDeadline = new Deadline("submit report", LocalDate.of(2026, 9, 9).atStartOfDay());
+        Task event = new Event("meeting", LocalDate.of(2026, 9, 4).atTime(14, 0),
+                LocalDate.of(2026, 9, 4).atTime(15, 0));
+        Task earlyDeadline = new Deadline("buy gift", LocalDate.of(2026, 9, 2).atStartOfDay());
+        Task secondTodo = new ToDos("read book");
+        TaskList tasks = new TaskList(List.of(firstTodo, lateDeadline, event, earlyDeadline, secondTodo));
+
+        tasks.sortByDate();
+
+        assertEquals(List.of(earlyDeadline, event, lateDeadline, firstTodo, secondTodo), tasks.getTasks());
+    }
+
+    @Test
     void getTasksOn_matchingDate_returnsDeadlinesAndEventsButNotTodos() {
         LocalDate targetDate = LocalDate.of(2026, 9, 3);
         Task deadline = new Deadline("submit assignment", targetDate.atStartOfDay());
