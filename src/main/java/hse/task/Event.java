@@ -26,6 +26,11 @@ public class Event extends Task {
         return !date.isBefore(from.toLocalDate()) && !date.isAfter(to.toLocalDate());
     }
 
+    @Override
+    LocalDateTime getSortDateTime() {
+        return from;
+    }
+
     /** Returns this event in the standard event display format. */
     @Override
     public String toString() {

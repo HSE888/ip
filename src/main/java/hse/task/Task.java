@@ -1,5 +1,7 @@
 package hse.task;
 
+import java.time.LocalDateTime;
+
 /** Represents a task with a description and completion status. */
 public class Task {
     private String description;
@@ -24,6 +26,11 @@ public class Task {
     /** Marks this task as incomplete. */
     public void markAsNotDone() {
         isDone = false;
+    }
+
+    /** Returns the latest possible date-time so undated tasks sort after dated tasks. */
+    LocalDateTime getSortDateTime() {
+        return LocalDateTime.MAX;
     }
 
     /** Returns this task in the standard completion-status display format. */

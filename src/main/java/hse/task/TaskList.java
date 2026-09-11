@@ -2,6 +2,7 @@ package hse.task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,11 @@ public class TaskList {
         return tasks.stream()
                 .filter(task -> task.getDescription().contains(keyword))
                 .collect(Collectors.toList());
+    }
+
+    /** Sorts dated tasks chronologically while leaving undated tasks at the end. */
+    public void sortByDate() {
+        tasks.sort(Comparator.comparing(Task::getSortDateTime));
     }
 
     /** Returns tasks that are deadlines or events occurring on a supplied date. */

@@ -24,6 +24,11 @@ public class Deadline extends Task {
         return deadline.toLocalDate().equals(date);
     }
 
+    @Override
+    LocalDateTime getSortDateTime() {
+        return deadline;
+    }
+
     /** Returns this deadline in the standard deadline display format. */
     @Override
     public String toString() {
