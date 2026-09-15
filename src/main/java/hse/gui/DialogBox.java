@@ -48,13 +48,24 @@ public class DialogBox extends HBox {
 
     /** Creates a dialog box displaying a message from the user. */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox dialogBox = new DialogBox(text, img);
+        dialogBox.getStyleClass().add("user-dialog");
+        return dialogBox;
     }
 
     /** Creates a dialog box displaying a message from HSE. */
     public static DialogBox getDukeDialog(String text, Image img) {
         DialogBox dialogBox = new DialogBox(text, img);
         dialogBox.flip();
+        dialogBox.getStyleClass().add("hse-dialog");
+        return dialogBox;
+    }
+
+    /** Creates a visually distinct dialog box displaying an error from HSE. */
+    public static DialogBox getErrorDialog(String text, Image img) {
+        DialogBox dialogBox = getDukeDialog(text, img);
+        dialogBox.getStyleClass().remove("hse-dialog");
+        dialogBox.getStyleClass().add("error-dialog");
         return dialogBox;
     }
 }
