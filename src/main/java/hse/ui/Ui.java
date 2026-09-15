@@ -12,19 +12,19 @@ import hse.task.TaskList;
 public class Ui {
     private static final String DIVIDER = "____________________________________________________________";
     private final Scanner scanner;
-    private boolean guiMode;
+    private boolean isGuiMode;
     private final List<String> responseBuffer;
 
     /** Creates a user interface that reads from the standard input stream. */
     public Ui() {
         scanner = new Scanner(System.in);
-        guiMode = false;
+        isGuiMode = false;
         responseBuffer = new ArrayList<>();
     }
 
     /** Switches this interface to capture responses for a graphical interface instead of the console. */
     public void setGuiMode() {
-        guiMode = true;
+        isGuiMode = true;
         responseBuffer.clear();
     }
 
@@ -37,7 +37,7 @@ public class Ui {
 
     /** Prints the greeting displayed when the application starts. */
     public void showWelcome() {
-        if (guiMode) {
+        if (isGuiMode) {
             responseBuffer.add("Hello! I'm HSE. What can I do for you?");
             return;
         }
@@ -51,7 +51,7 @@ public class Ui {
 
     /** Returns whether another command is available from the console. */
     public boolean hasNextCommand() {
-        return !guiMode && scanner.hasNextLine();
+        return !isGuiMode && scanner.hasNextLine();
     }
 
     /** Reads and trims one command from the console. */
@@ -61,7 +61,7 @@ public class Ui {
 
     /** Prints the divider used to separate command interactions. */
     public void showLine() {
-        if (!guiMode) {
+        if (!isGuiMode) {
             System.out.println(DIVIDER);
         }
     }
@@ -134,7 +134,7 @@ public class Ui {
     /** Sends the supplied messages to the console or graphical response buffer in order. */
     private void output(String... messages) {
         for (String message : messages) {
-            if (guiMode) {
+            if (isGuiMode) {
                 responseBuffer.add(message);
             } else {
                 System.out.println(message);
