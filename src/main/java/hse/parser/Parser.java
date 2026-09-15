@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import hse.command.ByeCommand;
 import hse.command.Command;
@@ -26,12 +27,12 @@ public class Parser {
         BYE, LIST, FIND, FIND_DATE, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, SORT, INVALID
     }
 
-    private static final DateTimeFormatter ISO_DATE_FORMAT = DateTimeFormatter.ofPattern("uuuu-M-d");
-    private static final DateTimeFormatter SLASH_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/uuuu");
-    private static final DateTimeFormatter DASH_DATE_FORMAT = DateTimeFormatter.ofPattern("d-M-uuuu");
-    private static final DateTimeFormatter ISO_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("uuuu-M-d HHmm");
-    private static final DateTimeFormatter SLASH_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("d/M/uuuu HHmm");
-    private static final DateTimeFormatter DASH_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("d-M-uuuu HHmm");
+    private static final DateTimeFormatter ISO_DATE_FORMAT = strictFormatter("uuuu-M-d");
+    private static final DateTimeFormatter SLASH_DATE_FORMAT = strictFormatter("d/M/uuuu");
+    private static final DateTimeFormatter DASH_DATE_FORMAT = strictFormatter("d-M-uuuu");
+    private static final DateTimeFormatter ISO_DATE_TIME_FORMAT = strictFormatter("uuuu-M-d HHmm");
+    private static final DateTimeFormatter SLASH_DATE_TIME_FORMAT = strictFormatter("d/M/uuuu HHmm");
+    private static final DateTimeFormatter DASH_DATE_TIME_FORMAT = strictFormatter("d-M-uuuu HHmm");
 
     /** Returns the category of a command without executing it. */
     public static CommandType parseCommandType(String command) {
@@ -139,5 +140,10 @@ public class Parser {
                 }
             }
         }
+    }
+
+    /** Returns a formatter that rejects impossible dates instead of adjusting them. */
+    private static DateTimeFormatter strictFormatter(String pattern) {
+        return DateTimeFormatter.ofPattern(pattern).withResolverStyle(ResolverStyle.STRICT);
     }
 }

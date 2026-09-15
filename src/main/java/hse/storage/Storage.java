@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -106,9 +107,9 @@ public class Storage {
     private LocalDateTime parseSavedDateTime(String dateTime, DateTimeFormatter dateTimeFormat,
                                               DateTimeFormatter dateFormat) {
         try {
-            return LocalDateTime.parse(dateTime, dateTimeFormat);
+            return LocalDateTime.parse(dateTime, dateTimeFormat.withResolverStyle(ResolverStyle.STRICT));
         } catch (DateTimeParseException e) {
-            return LocalDate.parse(dateTime, dateFormat).atStartOfDay();
+            return LocalDate.parse(dateTime, dateFormat.withResolverStyle(ResolverStyle.STRICT)).atStartOfDay();
         }
     }
 }

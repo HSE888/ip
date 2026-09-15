@@ -1,5 +1,12 @@
 # Test Plan
 
+## Automated Tests
+
+The JUnit suite covers command parsing, date parsing, task completion state, date matching,
+task-list mutations and searches, chronological sorting, and storage loading and saving.
+
+Run the suite and code-style checks with `./gradlew clean check`.
+
 ## GUI Presentation
 
 1. Start the graphical application and enter `list`.

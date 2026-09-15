@@ -25,6 +25,20 @@ class TaskListTest {
     }
 
     @Test
+    void deleteMarkAndUnmark_existingTask_updatesAndReturnsTask() {
+        Task firstTask = new ToDos("read notes");
+        Task secondTask = new ToDos("write report");
+        TaskList tasks = new TaskList(List.of(firstTask, secondTask));
+
+        assertEquals(firstTask, tasks.mark(0));
+        assertEquals("[T][X] read notes", firstTask.toString());
+        assertEquals(firstTask, tasks.unmark(0));
+        assertEquals("[T][ ] read notes", firstTask.toString());
+        assertEquals(secondTask, tasks.delete(1));
+        assertEquals(List.of(firstTask), tasks.getTasks());
+    }
+
+    @Test
     void find_matchingKeyword_returnsTasksInOriginalOrder() {
         Task firstMatch = new ToDos("read book");
         Task nonMatch = new ToDos("write notes");
