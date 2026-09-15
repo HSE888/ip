@@ -2,6 +2,11 @@
 
 HSE is a task manager that supports todos, deadlines, events, searching, and chronological sorting.
 
+## Graphical Interface
+
+The JavaFX interface distinguishes user messages, HSE replies, and error messages with separate visual styles.
+The conversation area and command input resize with the application window.
+
 ## Commands
 
 | Command | Example | Result |
