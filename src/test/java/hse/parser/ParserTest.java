@@ -73,6 +73,7 @@ class ParserTest {
     void getIndex_firstAndLastTask_returnsZeroBasedIndexes() {
         assertEquals(0, Parser.getIndex("mark 1", 3));
         assertEquals(2, Parser.getIndex("delete 3", 3));
+        assertEquals(0, Parser.getIndex("mark   1", 3));
     }
 
     @Test

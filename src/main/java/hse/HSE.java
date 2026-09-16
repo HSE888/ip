@@ -32,7 +32,7 @@ public class HSE {
     public String getResponse(String fullCommand) {
         ui.setGuiMode();
         try {
-            Command command = Parser.parse(fullCommand);
+            Command command = Parser.parse(fullCommand.trim());
             command.execute(tasks, ui, storage);
         } catch (NumberFormatException e) {
             ui.showError("Please enter a valid task number.");

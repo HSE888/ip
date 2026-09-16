@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /** Provides the JavaFX graphical interface for HSE. */
 public class Main extends Application {
 
-    private final Duke duke = new Duke();
+    private final HseApplication hseApplication = new HseApplication();
 
     @Override
     public void start(Stage stage) {
@@ -20,8 +20,9 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             scene.getStylesheets().add(Main.class.getResource("/view/styles.css").toExternalForm());
+            stage.setTitle("HSE");
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDuke(duke);
+            fxmlLoader.<MainWindow>getController().setHseApplication(hseApplication);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
