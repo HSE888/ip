@@ -19,35 +19,35 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Duke duke;
+    private HseApplication hseApplication;
 
     private final Image userImage = new Image(getClass().getResourceAsStream("/images/DaUser.png"));
-    private final Image dukeImage = new Image(getClass().getResourceAsStream("/images/DaDuke.png"));
+    private final Image hseImage = new Image(getClass().getResourceAsStream("/images/Hse.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance. */
-    public void setDuke(Duke duke) {
-        this.duke = duke;
-        dialogContainer.getChildren().addAll(DialogBox.getDukeDialog(
-                "Hello! I'm HSE. What can I do for you?", dukeImage));
+    /** Injects the HSE application instance. */
+    public void setHseApplication(HseApplication hseApplication) {
+        this.hseApplication = hseApplication;
+        dialogContainer.getChildren().addAll(DialogBox.getHseDialog(
+                "Hello! I'm HSE. What can I do for you?", hseImage));
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply.
+     * Creates two dialog boxes, one echoing user input and the other containing HSE's reply.
      */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = duke.getResponse(input);
+        String response = hseApplication.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 response.startsWith("OOPS!!!")
-                        ? DialogBox.getErrorDialog(response, dukeImage)
-                        : DialogBox.getDukeDialog(response, dukeImage)
+                        ? DialogBox.getErrorDialog(response, hseImage)
+                        : DialogBox.getHseDialog(response, hseImage)
         );
         userInput.clear();
     }

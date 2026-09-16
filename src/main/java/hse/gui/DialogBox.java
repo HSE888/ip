@@ -54,7 +54,7 @@ public class DialogBox extends HBox {
     }
 
     /** Creates a dialog box displaying a message from HSE. */
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getHseDialog(String text, Image img) {
         DialogBox dialogBox = new DialogBox(text, img);
         dialogBox.flip();
         dialogBox.getStyleClass().add("hse-dialog");
@@ -63,7 +63,7 @@ public class DialogBox extends HBox {
 
     /** Creates a visually distinct dialog box displaying an error from HSE. */
     public static DialogBox getErrorDialog(String text, Image img) {
-        DialogBox dialogBox = getDukeDialog(text, img);
+        DialogBox dialogBox = getHseDialog(text, img);
         dialogBox.getStyleClass().remove("hse-dialog");
         dialogBox.getStyleClass().add("error-dialog");
         return dialogBox;

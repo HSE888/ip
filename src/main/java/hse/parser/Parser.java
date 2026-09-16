@@ -104,7 +104,7 @@ public class Parser {
 
     /** Converts the task number in a command into a validated zero-based index. */
     public static int getIndex(String command, int taskCount) {
-        String[] parts = command.split(" ");
+        String[] parts = command.trim().split("\\s+");
         int index = Integer.parseInt(parts[1]) - 1;
         if (index < 0 || index >= taskCount) {
             throw new IndexOutOfBoundsException();

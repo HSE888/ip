@@ -3,11 +3,11 @@ package hse.gui;
 import hse.HSE;
 
 /** Provides the HSE task manager to the graphical interface. */
-public class Duke {
+public class HseApplication {
     private final HSE hse;
 
     /** Creates a chat assistant backed by the standard HSE data file. */
-    public Duke() {
+    public HseApplication() {
         hse = new HSE("data/duke.txt");
     }
 
