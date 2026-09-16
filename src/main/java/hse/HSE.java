@@ -1,8 +1,6 @@
 package hse;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.time.format.DateTimeParseException;
 
 import hse.command.Command;
@@ -21,30 +19,13 @@ public class HSE {
     /** Creates an application that stores its tasks at the supplied path. */
     public HSE(String filePath) {
         ui = new Ui();
-        storage = new Storage(migrateLegacyDataFile(filePath));
+        storage = new Storage(filePath);
         try {
             tasks = storage.load();
         } catch (IOException e) {
             ui.showLoadingError();
             tasks = new TaskList();
         }
-    }
-
-    /** Copies the old default data file to the HSE-named file when needed. */
-    private static String migrateLegacyDataFile(String filePath) {
-        if (!filePath.equals("data/hse.txt")) {
-            return filePath;
-        }
-        File currentFile = new File(filePath);
-        File legacyFile = new File("data/duke.txt");
-        if (!currentFile.exists() && legacyFile.exists()) {
-            try {
-                Files.copy(legacyFile.toPath(), currentFile.toPath());
-            } catch (IOException e) {
-                return legacyFile.getPath();
-            }
-        }
-        return filePath;
     }
 
     /** Processes one user command and returns the response text for graphical display. */
