@@ -8,7 +8,7 @@ public class HseApplication {
 
     /** Creates a chat assistant backed by the standard HSE data file. */
     public HseApplication() {
-        hse = new HSE("data/duke.txt");
+        hse = new HSE("data/hse.txt");
     }
 
     /** Generates a response for the user's chat message. */
