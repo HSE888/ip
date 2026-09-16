@@ -1,45 +1,84 @@
 # HSE User Guide
 
-HSE is a task manager that supports todos, deadlines, events, searching, and chronological sorting.
+HSE is a task manager for keeping track of todos, deadlines, and events through a conversational
+interface.
+
+![HSE application window](Ui.png)
+
+## Quick Start
+
+1. Open a terminal in the project folder.
+2. Run `./gradlew run`.
+3. Enter a command in the input field and press Enter or Send.
+4. Enter `bye` when you are finished.
+
+Commands are case-sensitive. Extra spaces around a command are ignored, and task numbers begin at 1.
 
 ## Graphical Interface
 
 The JavaFX interface distinguishes user messages, HSE replies, and error messages with separate visual styles.
 The conversation area and command input resize with the application window.
 
-## Commands
+## Features
 
-| Command | Example | Result |
-| --- | --- | --- |
-| Add a todo | `todo read book` | Adds an undated task. |
-| Add a deadline | `deadline submit report /by 2026-09-20` | Adds a task due at the specified date or time. |
-| Add an event | `event meeting /from 2026-09-15 1400 /to 2026-09-15 1500` | Adds a task with a start and end time. |
-| List tasks | `list` | Displays every task in its stored order. |
-| Sort tasks | `sort` | Sorts dated tasks chronologically and places todos after them. |
-| Find tasks | `find book` | Displays tasks whose descriptions contain the keyword. |
-| Find tasks on a date | `finddate 2026-09-15` | Displays deadlines and events occurring on that date. |
-| Mark a task | `mark 1` | Marks task 1 as complete. |
-| Unmark a task | `unmark 1` | Marks task 1 as incomplete. |
-| Delete a task | `delete 1` | Removes task 1. |
-| Exit | `bye` | Closes HSE. |
+### Adding Tasks
 
-## Sorting Tasks
-
-Use `sort` without extra arguments to reorder the saved task list. Deadlines are ordered by due date and
-events by start date. Todos remain after dated tasks, while tasks with the same sort time keep their
-existing relative order.
-
-Example:
+Add a todo without a date:
 
 ```text
-deadline submit report /by 2026-09-20
+todo read book
+```
+
+Add a deadline with `/by`:
+
+```text
+deadline submit report /by 2026-09-20 2359
+```
+
+Add an event with both `/from` and `/to`:
+
+```text
 event project meeting /from 2026-09-15 1400 /to 2026-09-15 1500
-todo read notes
+```
+
+Dates can use `yyyy-MM-dd`, `d/M/yyyy`, or `d-M-yyyy`. Times use 24-hour `HHmm` format and are optional.
+
+### Viewing and Finding Tasks
+
+```text
+list
+find book
+finddate 2026-09-15
+```
+
+`find` looks for a keyword in task descriptions. `finddate` lists deadlines and events occurring on a date.
+
+### Updating Tasks
+
+```text
+mark 1
+unmark 1
+delete 1
+```
+
+Use the task number shown by `list`. `mark` completes a task, `unmark` reopens it, and `delete` removes it.
+
+### Sorting Tasks
+
+```text
 sort
 ```
 
-HSE responds:
+`sort` orders deadlines by due date and events by start date. Todos remain after dated tasks; tasks with the
+same date keep their existing order. The new order is saved automatically.
+
+### Exiting HSE
 
 ```text
-Tasks sorted by date.
+bye
 ```
+
+## Saving and Errors
+
+HSE saves task changes automatically. If a command is incomplete, a task number is invalid, a date does not
+exist, or saving fails, HSE displays an error message and remains open so you can correct the command.
