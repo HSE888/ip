@@ -43,6 +43,11 @@ dependencies {
     implementation("org.openjfx:javafx-controls:${javaFxVersion}:${javaFxPlatform}")
     implementation("org.openjfx:javafx-fxml:${javaFxVersion}:${javaFxPlatform}")
     implementation("org.openjfx:javafx-graphics:${javaFxVersion}:${javaFxPlatform}")
+
+    // Package native JavaFX libraries for each desktop operating system in the fat JAR.
+    runtimeOnly "org.openjfx:javafx-graphics:${javaFxVersion}:win"
+    runtimeOnly "org.openjfx:javafx-graphics:${javaFxVersion}:linux"
+    runtimeOnly "org.openjfx:javafx-graphics:${javaFxVersion}:mac"
 }
 
 test {

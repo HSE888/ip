@@ -24,6 +24,7 @@ public class MainWindow extends AnchorPane {
     private final Image userImage = new Image(getClass().getResourceAsStream("/images/DaUser.png"));
     private final Image hseImage = new Image(getClass().getResourceAsStream("/images/Hse.png"));
 
+    /** Binds the transcript scroll position to its content height. */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
