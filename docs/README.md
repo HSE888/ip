@@ -7,10 +7,12 @@ interface.
 
 ## Quick Start
 
-1. Open a terminal in the project folder.
-2. Run `./gradlew run`.
-3. Enter a command in the input field and press Enter or Send.
-4. Enter `bye` when you are finished.
+1. Download `hse.jar` from the [latest GitHub release](https://github.com/HSE888/ip/releases/latest).
+2. Make sure Java 25 is installed.
+3. Open a terminal in the folder containing `hse.jar`.
+4. Run `java -jar hse.jar`.
+5. Enter a command in the input field and press Enter or Send.
+6. Enter `bye` when you are finished.
 
 Commands are case-sensitive. Extra spaces around a command are ignored, and task numbers begin at 1.
 
