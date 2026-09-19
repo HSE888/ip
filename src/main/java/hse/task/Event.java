@@ -17,6 +17,9 @@ public class Event extends Task {
     /** Creates an event with the supplied description, start, and end date-times. */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
+        if (!from.isBefore(to)) {
+            throw new IllegalArgumentException("An event cannot end before it starts.");
+        }
         this.from = from;
         this.to = to;
     }
