@@ -51,6 +51,14 @@ class TaskTest {
     }
 
     @Test
+    void event_endTimeBeforeStartOnSameDate_throwsException() {
+        LocalDateTime start = LocalDateTime.of(2026, 9, 5, 10, 0);
+        LocalDateTime end = LocalDateTime.of(2026, 9, 5, 9, 59);
+
+        assertThrows(IllegalArgumentException.class, () -> new Event("camp", start, end));
+    }
+
+    @Test
     void event_endAtSameTimeAsStart_throwsException() {
         LocalDateTime start = LocalDateTime.of(2026, 9, 5, 10, 0);
 
