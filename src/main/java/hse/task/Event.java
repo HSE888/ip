@@ -14,7 +14,11 @@ public class Event extends Task {
     private LocalDateTime from;
     private LocalDateTime to;
 
-    /** Creates an event with the supplied description, start, and end date-times. */
+    /**
+     * Creates an event with the supplied description, start, and end date-times.
+     *
+     * @throws IllegalArgumentException if the end is not after the start.
+     */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         if (!from.isBefore(to)) {
