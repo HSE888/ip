@@ -2,6 +2,7 @@ package hse.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -39,5 +40,20 @@ class TaskTest {
         assertTrue(event.occursOn(LocalDate.of(2026, 9, 5)));
         assertFalse(event.occursOn(LocalDate.of(2026, 9, 2)));
         assertFalse(event.occursOn(LocalDate.of(2026, 9, 6)));
+    }
+
+    @Test
+    void event_endBeforeStart_throwsException() {
+        LocalDateTime start = LocalDateTime.of(2026, 9, 5, 10, 0);
+        LocalDateTime end = LocalDateTime.of(2026, 9, 4, 10, 0);
+
+        assertThrows(IllegalArgumentException.class, () -> new Event("camp", start, end));
+    }
+
+    @Test
+    void event_endAtSameTimeAsStart_throwsException() {
+        LocalDateTime start = LocalDateTime.of(2026, 9, 5, 10, 0);
+
+        assertThrows(IllegalArgumentException.class, () -> new Event("camp", start, start));
     }
 }
